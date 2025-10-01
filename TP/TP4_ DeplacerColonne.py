@@ -7,12 +7,12 @@ from DobotEDU import *
 # ---------------------------------
 # Constantes
 # ---------------------------------
-HOME_X, HOME_Y, HOME_Z = (160, 34, 0)    # position de repos
-COMMON_Z_ABOVE = 0                       # hauteur d’approche
-COMMON_Z_AT    = -50                     # hauteur de saisie/dépôt
+HOME_X, HOME_Y, HOME_Z = (218.5, 78, 0)    # position de reposau dessus du carré bleu 160, 34, 0
+COMMON_Z_ABOVE = 0                         # hauteur d’approche
+COMMON_Z_AT = -45                       # hauteur de saisie/dépôt
 
-# Grille (cube bas-gauche, position 4,1 face au robot)
-MATRIX_X0, MATRIX_Y0 = (208, 34)
+# Grille (position 0)
+MATRIX_X0, MATRIX_Y0 = (183, 34.5)
 STEP = 35     # entraxe entre cubes en mm
 
 # ---------------------------------

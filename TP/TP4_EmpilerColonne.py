@@ -7,13 +7,13 @@ from DobotEDU import *
 # ---------------------------------
 # Constantes
 # ---------------------------------
-HOME_X, HOME_Y, HOME_Z = (160, 34, 0)    # position de repos
-COMMON_Z_ABOVE = 0                       # hauteur d’approche
-COMMON_Z_AT    = -50                     # hauteur de saisie/dépôt
-STACK_HEIGHT   = 30                      # épaisseur d’un cube en mm
+HOME_X, HOME_Y, HOME_Z = (218.5, 78, 10)    # position de reposau dessus du carré bleu 160, 34, 0
+COMMON_Z_ABOVE = 10                         # hauteur d’approche
+COMMON_Z_AT = -45                        # hauteur de saisie/dépôt
+STACK_HEIGHT = 30                         # épaisseur d’un cube en mm (5mm de sécurité)
 
-# Grille (cube bas-gauche, case 0 = i=0, j=0)
-MATRIX_X0, MATRIX_Y0 = (208, 34)
+# Grille (position 0)
+MATRIX_X0, MATRIX_Y0 = (183, 34.5)
 STEP = 35     # entraxe entre cubes en mm
 
 # Coordonnées de la case 0 (destination)
@@ -49,7 +49,7 @@ def pick_and_place(from_x, from_y, to_x, to_y, stack_level=0):
     magician.set_endeffector_suctioncup(True, False)
     magician.wait(0.5)
 
-    # 6. Remonter puis retour maison
+    # 6. Remonter puis retour HOME
     magician.ptp(mode=2, x=to_x, y=to_y, z=COMMON_Z_ABOVE, r=0)
     magician.wait(0.5)
     magician.ptp(mode=2, x=HOME_X, y=HOME_Y, z=HOME_Z, r=0)

@@ -7,12 +7,17 @@ from DobotEDU import *
 # ---------------------------------
 # Constantes
 # ---------------------------------
-HOME_X, HOME_Y, HOME_Z = (200, 0, 50)
-COMMON_Z_ABOVE = 50
-COMMON_Z_AT    = 10
-MATRIX_X0, MATRIX_Y0 = (150, 100)
-STEP = 35
-PLACE_X, PLACE_Y = (250, -100)
+HOME_X, HOME_Y, HOME_Z = (218.5, 78, 0)    # position de reposau dessus du carré bleu 160, 34, 0
+COMMON_Z_ABOVE = 10                         # hauteur d’approche
+COMMON_Z_AT = -45                       # hauteur de saisie/dépôt
+
+# Grille (position 0)
+MATRIX_X0, MATRIX_Y0 = (183, 34.5)
+STEP = 35     # entraxe entre cubes en mm
+
+# Emplacement d eprise de cube
+PLACE_X, PLACE_Y = (77, -180)   # à ajuster selon votre espace
+
 
 # ---------------------------------
 # Fonction jump_to sécurisée
