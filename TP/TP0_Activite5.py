@@ -1,9 +1,9 @@
 # version: Python3
 from DobotEDU import *
 
-# ======================
-# === TP0_Activite5 =====
-# ======================
+# =====================
+# === TP0_Activite5 ===
+# =====================
 
 # --- Constantes / positions ---
 HOME = (218.5, 78, 0)              # position HOME au dessus du carré bleu

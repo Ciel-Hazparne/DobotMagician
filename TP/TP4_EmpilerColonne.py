@@ -1,13 +1,13 @@
 from DobotEDU import *
 
-# ============================
-# ==== TP4_EmpilerColonne ====
-# ============================
+# ==========================
+# === TP4_EmpilerColonne ===
+# ==========================
 
 # ---------------------------------
 # Constantes
 # ---------------------------------
-HOME_X, HOME_Y, HOME_Z = (218.5, 78, 10)    # position de reposau dessus du carré bleu 160, 34, 0
+HOME_X, HOME_Y, HOME_Z = (218.5, 78, 10)    # position de reposau dessus du carré bleu
 COMMON_Z_ABOVE = 10                         # hauteur d’approche
 COMMON_Z_AT = -45                        # hauteur de saisie/dépôt
 STACK_HEIGHT = 30                         # épaisseur d’un cube en mm (5mm de sécurité)

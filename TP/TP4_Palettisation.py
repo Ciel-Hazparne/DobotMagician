@@ -1,13 +1,13 @@
 from DobotEDU import *
 
-# ============================
-# ==== TP4_Palettisation =====
-# ============================
+# ==========================
+# === TP4_Palettisation ====
+# ==========================
 
 # ---------------------------------
 # Constantes
 # ---------------------------------
-HOME_X, HOME_Y, HOME_Z = (218.5, 78, 0)    # position de reposau dessus du carré bleu 160, 34, 0
+HOME_X, HOME_Y, HOME_Z = (218.5, 78, 0)    # position de reposau dessus du carré bleu
 COMMON_Z_ABOVE = 10                         # hauteur d’approche
 COMMON_Z_AT = -45                       # hauteur de saisie/dépôt
 

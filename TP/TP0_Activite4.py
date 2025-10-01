@@ -25,7 +25,7 @@ positions = {
     8: (253, -35.5, COMMON_Z)
 }
 
-# Parcours en U : suivre la ligne
+# Parcours L : suivre la ligne
 parcours_L = [0, 1, 2]
 
 # --- Fonction utilitaire pour déplacement ---

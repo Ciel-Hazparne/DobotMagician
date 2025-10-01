@@ -1,15 +1,15 @@
 from DobotEDU import *
 
-# ============================
-# ==== TP4_DeplacerLigne =====
-# ============================
+# =========================
+# === TP4_DeplacerLigne ===
+# =========================
 
 # ---------------------------------
 # Constantes
 # ---------------------------------
-HOME_X, HOME_Y, HOME_Z = (218.5, 78, 0)    # position de reposau dessus du carré bleu 160, 34, 0
+HOME_X, HOME_Y, HOME_Z = (218.5, 78, 0)    # position de reposau dessus du carré bleu
 COMMON_Z_ABOVE = 0                         # hauteur d’approche
-COMMON_Z_AT = -45                       # hauteur de saisie/dépôt
+COMMON_Z_AT = -45                          # hauteur de saisie/dépôt
 
 # Grille (position 0)
 MATRIX_X0, MATRIX_Y0 = (183, 34.5)

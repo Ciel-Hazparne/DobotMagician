@@ -1,9 +1,9 @@
 # version: Python3
 from DobotEDU import *
 
-# ======================
-# ===TP0_Activite1 =====
-# ======================
+# ====================
+# ===TP0_Activite1 ===
+# ====================
 
 # === Définition des coordonnées (exemple, à remplacer par vos valeurs) ===
 HOME = (218.5, 78, -60)              # position HOME au dessus du carré bleu
