@@ -9,8 +9,8 @@ from DobotEDU import *
 # ---------------------------------
 HOME_X, HOME_Y, HOME_Z = (218.5, 78, 10)    # position de reposau dessus du carré bleu
 COMMON_Z_ABOVE = 10                         # hauteur d’approche
-COMMON_Z_AT = -45                        # hauteur de saisie/dépôt
-STACK_HEIGHT = 30                         # épaisseur d’un cube en mm (5mm de sécurité)
+COMMON_Z_AT = -45                           # hauteur de saisie/dépôt
+STACK_HEIGHT = 30                           # hauteur d’un cube en mm (avec 5mm de sécurité)
 
 # Grille (position 0)
 MATRIX_X0, MATRIX_Y0 = (183, 34.5)

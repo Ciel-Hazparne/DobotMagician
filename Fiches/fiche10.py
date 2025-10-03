@@ -17,7 +17,7 @@ Y_ORIGIN = 116
 X_PLACE = 259
 Y_PLACE = 0
 
-#fonctions principales
+# fonctions principales
 def move_to(x, y, z):
     magician.ptp(1, x, y, z, 0)
     magician.wait(0.5)
