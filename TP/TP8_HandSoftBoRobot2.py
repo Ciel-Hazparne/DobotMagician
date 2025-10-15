@@ -2,7 +2,7 @@
 from DobotEDU import *
 
 # ============================
-# === TP8_HandHardBoRobot1 ===
+# === TP8_HandHardBoRobot2 ===
 # ============================
 
 # Variable partagée
@@ -88,8 +88,10 @@ def pick_and_place():
 # -------------------------------
 
 # Robot 2 - Attente signal puis Pick & Place
-if signal == 1:
-    pick_and_place()
+while signal != 1:
+    wait_for(0.5)
+
+pick_and_place()
 
 # Remise à zéro du signal
 signal = 0
