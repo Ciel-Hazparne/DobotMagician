@@ -7,17 +7,17 @@ from DobotEDU import *
 
 # Positions de base
 HOME = (259, 0, 50)  # position de repos au dessus du tapis
-ABPick = (161.5, 178.27, 0)
-ATPick = (161.5, 178.27, -44.74)
-CONVEYOR_ABOVE = (280, 0, 50)
-
+ABPick = (171.24, 164.06, 0)
+ATPick = (171.24, 164.06, -44.74)
+CONVEYOR_ABOVE = (264.7, 0, 50)
+CONVEYOR_PLACE = (264.7, 0, 20)
 
 # --- Fonctions utilitaires ---
 def wait_for(seconds):
     magician.wait(second=seconds)
 
 
-def jump_to(x, y, z, r=0, jump_height=0):
+def jump_to(x, y, z, r=0, jump_height=20):
     pose = magician.get_pose()
     x_cur, y_cur, z_cur, r_cur = pose["x"], pose["y"], pose["z"], pose["r"]
 
@@ -51,6 +51,9 @@ def pick_and_place_to_conveyor():
     # Déplacer au-dessus du convoyeur
     jump_to(CONVEYOR_ABOVE[0], CONVEYOR_ABOVE[1], CONVEYOR_ABOVE[2])
 
+    # Descendre au-dessus du convoyeur
+    magician.ptp(mode=2, x=CONVEYOR_PLACE[0], y=CONVEYOR_PLACE[1], z=CONVEYOR_PLACE[2], r=0)
+
     # Déposer
     magician.set_endeffector_suctioncup(enable=True, on=False)
     wait_for(0.5)
@@ -63,27 +66,33 @@ def pick_and_place_to_conveyor():
 # --- Gestion du convoyeur ---
 def manage_conveyor():
     # Démarrer le convoyeur (Stepper1)
-    magician.set_converyor(index=magician.Stepper2, enable=True, speed=60.0)
+    magician.set_converyor(index=magician.Stepper1, enable=True, speed=100.0)
 
     # activer les capteur version 2 sur GP4
-    # magician.set_infrared_sensor(port=4, enable=True, version=1)
+    magician.set_infrared_sensor(port=4, enable=True, version=1)
 
-    # Attendre détection cube sur capteur IR
-    while magician.get_infrared_sensor(port=4) == 0:
+    while True:
+        detect = magician.get_infrared_sensor(port=4)
+        print("Détection IR:", detect)
+
+        if detect["status"] == 1:  # cube détecté
+            break
+
         wait_for(0.1)
 
+
     # Arrêter le convoyeur
-    magician.set_converyor(index=magician.Stepper2, enable=False, speed=0.0)
+    magician.set_converyor(index=magician.Stepper1, enable=False, speed=0.0)
     # désactiver les capteur version 2 sur GP4
-    # magician.set_infrared_sensor(port=4, enable=False, version=1)
+    magician.set_infrared_sensor(port=4, enable=False, version=1)
 
     # Pause 2s pour traitement
     wait_for(2)
 
     # Redémarrer pour évacuation
-    magician.set_converyor(index=magician.Stepper2, enable=True, speed=50.0)
+    magician.set_converyor(index=magician.Stepper1, enable=True, speed=100.0)
     wait_for(3)  # ajuster selon vitesse tapis
-    magician.set_converyor(index=magician.Stepper2, enable=False, speed=0.0)
+    magician.set_converyor(index=magician.Stepper1, enable=False, speed=0.0)
 
 
 # --- Programme principal ---

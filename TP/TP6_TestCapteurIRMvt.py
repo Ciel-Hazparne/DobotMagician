@@ -7,14 +7,14 @@ HOME = (186, 0, 52, 0)
 PLACE = (250, 0, 0, 0)
 
 # Activer capteur IR sur GP2
-magician.set_infrared_sensor(port=2, enable=True, version=1)
+magician.set_infrared_sensor(port=4, enable=True, version=1)
 
 # Lecture capteur
-detect = magician.get_infrared_sensor(port=2)
-detect1 = magician.get_di(io="DI_02")  # pour info uniquement
+detect = magician.get_infrared_sensor(port=4)
+detect1 = magician.get_di(io="DI_04")  # pour info uniquement
 
-print("Lecture GP2 :", detect)
-print("Lecture I/O2 :", detect1)
+print("Lecture GP4 :", detect)
+print("Lecture I/O4 :", detect1)
 
 def go_place():
     magician.ptp(mode=2, x=PLACE[0], y=PLACE[1], z=PLACE[2], r=PLACE[3])
@@ -24,7 +24,7 @@ def go_home():
     magician.ptp(mode=2, x=HOME[0], y=HOME[1], z=HOME[2], r=HOME[3])
     magician.wait(second=0.5)
 
-# Correction : utiliser la clé 'status'
+# utiliser la clé 'status'
 if detect['status'] == 1:
     go_place()
     print("Robot en position PLACE")
