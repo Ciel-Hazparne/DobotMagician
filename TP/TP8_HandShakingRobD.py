@@ -4,10 +4,10 @@ from DobotEDU import *
 # --- TP8_HandShakingRobD---
 # --------------------------------------
 
-signal_file = "C:/Dobot/signal.txt"
+signal_file = "H:\Dobot\signal.txt"
 
-HOME = (250, 0, -8, 0)
-LEFT = (250, 50, -8, 20)  # tourne légèrement vers la gauche
+HOME = (250, 0, 50, 0)
+LEFT = (250, -50, 50, 0)  # tourne légèrement vers la gauche
 
 def wait_for(magician, seconds):
     magician.wait(second=seconds)

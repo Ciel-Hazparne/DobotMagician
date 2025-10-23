@@ -4,11 +4,10 @@ from DobotEDU import *
 # --- TP8_HandShakingRobG ---
 # --------------------------------------
 
-#magicianD = Dobot(port="COM5")  # adapte le port selon ton installation
-signal_file = "C:/Dobot/signal.txt"
+signal_file="H:\Dobot\signal.txt"
 
-HOME = (250, 0, -8, 0)
-RIGHT = (250, -50, -8, -20)  # tourne légèrement vers la droite
+HOME = (250, 0, 50, 0)
+RIGHT = (250, 50, 50, 0)  # tourne légèrement vers la droite
 
 def wait_for(magician, seconds):
     magician.wait(second=seconds)
