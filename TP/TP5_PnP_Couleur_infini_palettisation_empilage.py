@@ -2,6 +2,12 @@
 from DobotEDU import *
 import random
 
+# #################################################### #
+# Programme qui alterne automatiquement :              #
+# - cycle pair → palettisation en lignes par couleur   #
+# - cycle impair → palettisation en piles par couleur  #
+# #################################################### #
+
 # ============================
 # PARAMÈTRES GÉNÉRAUX
 # ============================
@@ -22,10 +28,11 @@ ROW_BLUE  = 0
 ROW_GREEN = 1
 ROW_RED   = 2
 
-# Sécurité trajectoire
 Z_CLEAR = 45
 Z_APPROACH = 15
 WAIT_SHORT = 0.15
+
+CUBE_HEIGHT = 25
 
 # ============================
 # OUTILS
@@ -35,32 +42,24 @@ def wait_for(s):
 
 def move_smooth(x, y, z, r=0):
     p = magician.get_pose()
-    px, py, pz = p["x"], p["y"], p["z"]
-    pr = p.get("r", 0)
-
-    magician.ptp(2, px, py, Z_CLEAR, pr)
+    magician.ptp(2, p["x"], p["y"], Z_CLEAR, r)
     wait_for(WAIT_SHORT)
-
     magician.ptp(2, x, y, Z_CLEAR, r)
     wait_for(WAIT_SHORT)
-
     magician.ptp(2, x, y, z + Z_APPROACH, r)
     wait_for(WAIT_SHORT)
-
     magician.ptp(2, x, y, z, r)
     wait_for(WAIT_SHORT)
 
 def read_color_tolerant():
     magician.set_color_sensor(2, True, 1)
     wait_for(0.1)
-
     readings = []
     for _ in range(3):
         c = magician.get_color_sensor()
         if isinstance(c, dict):
             readings.append(c)
         wait_for(0.1)
-
     magician.set_color_sensor(2, False, 1)
 
     r = sum(x.get("red", 0) for x in readings)
@@ -80,16 +79,16 @@ def pick(x, y):
     wait_for(0.4)
     magician.ptp(2, x, y, ABPick_Z, 0)
 
-def place(x, y):
-    move_smooth(x, y, ABPlace_Z)
-    magician.ptp(2, x, y, ATPlace_Z, 0)
+def place(x, y, z_offset=0):
+    move_smooth(x, y, ABPlace_Z + z_offset)
+    magician.ptp(2, x, y, ATPlace_Z + z_offset, 0)
     wait_for(0.2)
     magician.set_endeffector_suctioncup(True, False)
     wait_for(0.3)
-    magician.ptp(2, x, y, ABPlace_Z, 0)
+    magician.ptp(2, x, y, ABPlace_Z + z_offset, 0)
 
 # ============================
-# GÉNÉRATION DES GRILLES
+# GRILLES
 # ============================
 def generate_start_grid():
     return [(ABPick_X - j * STEP, ABPick_Y + i * STEP)
@@ -105,25 +104,23 @@ end_grid = generate_end_grid()
 # ============================
 # PROGRAMME PRINCIPAL
 # ============================
-
-# === Initialisation si en mode offline
-# magician.set_home()
-# wait_for(4)
-
 magician.ptp(1, HOME_X, HOME_Y, HOME_Z, 0)
 wait_for(0.5)
 
 for cycle in range(NB_CYCLES):
 
-    next_col = {ROW_RED: 0, ROW_GREEN: 0, ROW_BLUE: 0}
-    cubes_to_sort = start_grid[:]
+    mode_stack = (cycle % 2 == 1)   # alternance
 
-    for (x, y) in cubes_to_sort:
+    next_col = {ROW_RED: 0, ROW_GREEN: 0, ROW_BLUE: 0}
+    stack_level = {ROW_RED: 0, ROW_GREEN: 0, ROW_BLUE: 0}
+
+    for (x, y) in start_grid:
+
         pick(x, y)
 
         magician.ptp(2, HOME_X, HOME_Y, Z_CLEAR, 0)
         move_smooth(SENSOR_X, SENSOR_Y, SENSOR_ABOVE_Z)
-        magician.ptp(2, SENSOR_X, SENSOR_Y, 45, 0)
+        magician.ptp(2, SENSOR_X, SENSOR_Y, Z_CLEAR, 0)
 
         color = read_color_tolerant()
 
@@ -135,21 +132,27 @@ for cycle in range(NB_CYCLES):
             row = ROW_BLUE
         else:
             magician.set_endeffector_suctioncup(True, False)
-            continue
-
-        col = next_col[row]
-        if col >= 3:
-            magician.set_endeffector_suctioncup(True, False)
             magician.ptp(2, HOME_X, HOME_Y, HOME_Z, 0)
             continue
 
-        next_col[row] += 1
-        idx = row * 3 + col
+        if mode_stack:
+            idx = row * 3     # colonne 0
+            z_offset = stack_level[row] * CUBE_HEIGHT
+            stack_level[row] += 1
+        else:
+            col = next_col[row]
+            if col >= 3:
+                magician.set_endeffector_suctioncup(True, False)
+                magician.ptp(2, HOME_X, HOME_Y, HOME_Z, 0)
+                continue
+            idx = row * 3 + col
+            next_col[row] += 1
+            z_offset = 0
 
-        place(*end_grid[idx])
+        place(*end_grid[idx], z_offset=z_offset)
         magician.ptp(2, HOME_X, HOME_Y, HOME_Z, 0)
 
-    # --- REMISE ALÉATOIRE ---
+    # === REMISE ALÉATOIRE ===
     shuffled_start = start_grid[:]
     random.shuffle(shuffled_start)
 

@@ -7,7 +7,7 @@ from DobotEDU import *
 # ---------------------------------
 # Constantes
 # ---------------------------------
-HOME_X, HOME_Y, HOME_Z = (218.5, 78, 10)    # position de reposau dessus du carré bleu
+HOME_X, HOME_Y, HOME_Z = (218.5, 78, 10)    # position de repos au dessus du carré bleu
 COMMON_Z_ABOVE = 10                         # hauteur d’approche
 COMMON_Z_AT = -45                           # hauteur de saisie/dépôt
 STACK_HEIGHT = 30                           # hauteur d’un cube en mm (avec 5mm de sécurité)
